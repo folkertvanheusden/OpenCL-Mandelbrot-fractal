@@ -1,3 +1,6 @@
+// written by Folkert van Heusden
+// released under MIT license
+
 #include "OpenCL-Wrapper/src/kernel.hpp"
 
 string opencl_c_container()

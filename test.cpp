@@ -1,3 +1,6 @@
+// written by Folkert van Heusden
+// released under MIT license
+
 #include <stdio.h>
 
 #include "OpenCL-Wrapper/src/opencl.hpp"
@@ -5,12 +8,18 @@
 
 int main(int argc, char *argv[])
 {
+	FILE *fh = fopen("test.pgm", "w");
+	if (!fh) {
+		fprintf(stderr, "Cannot create output file\n");
+		return 1;
+	}
+
 	Device device(select_device_with_most_flops());
 
 	Memory<uint> dimensions(device, 3);
-	dimensions[0] = 256;  // w
-	dimensions[1] = 256;  // h
-	dimensions[1] = 16;  // it
+	dimensions[0] = 1920;  // w
+	dimensions[1] = 1080;  // h
+	dimensions[2] = 256;  // it
 	dimensions.write_to_device();
 
 	Memory<float> coordinates(device, 4);
@@ -28,7 +37,11 @@ int main(int argc, char *argv[])
 
 	output.read_from_device();
 
-	wait();
+	fprintf(fh, "P2\n%d\n%d\n%d\n", dimensions[0], dimensions[1], dimensions[2]);
+	for(uint i=0; i<N; i++)
+		fprintf(fh, "%d%c", output[i], (i % 7) == 0 ? '\n' : ' ');
+	fprintf(fh, "\n");
+	fclose(fh);
 
 	return 0;
 }
