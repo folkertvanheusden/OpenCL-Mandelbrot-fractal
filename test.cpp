@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-	FILE *fh = fopen("test.pgm", "w");
+	FILE *fh = fopen("test.ppm", "w");
 	if (!fh) {
 		fprintf(stderr, "Cannot create output file\n");
 		return 1;
@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 	Device device(select_device_with_most_flops());
 
 	Memory<uint> dimensions(device, 3);
-	dimensions[0] = 1920;  // w
-	dimensions[1] = 1080;  // h
+	dimensions[0] = 3840;  // w
+	dimensions[1] = 2160;  // h
 	dimensions[2] = 256;  // it
 	dimensions.write_to_device();
 
@@ -30,15 +30,19 @@ int main(int argc, char *argv[])
 	coordinates.write_to_device();
 
 	const uint   N   = dimensions[0] * dimensions[1];
-	Memory<uint> output(device, N); // allocate memory on both host and device
+	Memory<uint> output(device, N * 3); // allocate memory on both host and device
 
 	Kernel mandelbrot(device, N, "mandelbrot_kernel", dimensions, coordinates, output);
 	mandelbrot.run();
 
 	output.read_from_device();
 
-	fprintf(fh, "P2\n%d\n%d\n%d\n", dimensions[0], dimensions[1], dimensions[2]);
-	for(uint i=0; i<N; i++)
+	uint max_val = 0;
+	for(uint i=0; i<N * 3; i++)
+		max_val = std::max(max_val, output[i]);
+
+	fprintf(fh, "P3\n%d\n%d\n%d\n", dimensions[0], dimensions[1], max_val);
+	for(uint i=0; i<N * 3; i++)
 		fprintf(fh, "%d%c", output[i], (i % 7) == 0 ? '\n' : ' ');
 	fprintf(fh, "\n");
 	fclose(fh);

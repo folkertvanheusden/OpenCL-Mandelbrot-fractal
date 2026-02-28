@@ -15,7 +15,7 @@ After that, invoke:
 ./opencl-mandelbrot
 ```
 
-After a while (initialization takes by far the longest) a `test.pgm` file is created. Most Linux picture viewers can open that.
+After a while (initialization takes by far the longest) a `test.ppm` file is created. Most Linux picture viewers can open that.
 
 
 Folkert van Heusden
