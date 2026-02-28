@@ -1,10 +1,10 @@
 // written by Folkert van Heusden
 // released under MIT license
 
-#include <stdio.h>
+#include <chrono>
+#include <cstdio>
 
 #include "OpenCL-Wrapper/src/opencl.hpp"
-
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +33,12 @@ int main(int argc, char *argv[])
 	Memory<uint> output(device, N * 3); // allocate memory on both host and device
 
 	Kernel mandelbrot(device, N, "mandelbrot_kernel", dimensions, coordinates, output);
+
+        auto start_ts = std::chrono::system_clock::now();
 	mandelbrot.run();
+        auto end_ts = std::chrono::system_clock::now();
+
+	printf("Calculation took %lu microseconds\n", std::chrono::duration_cast<std::chrono::microseconds>(end_ts - start_ts).count());
 
 	output.read_from_device();
 
