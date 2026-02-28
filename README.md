@@ -1,7 +1,10 @@
 How to build:
 
 ```shell
-g++ -O3 -g test.cpp kernel.cpp `pkg-config --libs OpenCL` -o opencl-mandelbrot
+mkdir build
+cd build
+cmake ..
+make
 ```
 
 This requires e.g. the nvidia-opencl-dev to be installed (or something similar for AMD).
