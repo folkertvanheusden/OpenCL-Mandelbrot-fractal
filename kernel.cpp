@@ -20,7 +20,7 @@ string opencl_c_container()
 				while(++cur_it < dims[2]) {
 					double dx = x * x;
 					double dy = y * y;
-					if (dx + dy > 4.0)
+					if (dx + dy >= 4.0)
 						break;
 					double tx = dx - dy + re;
 					y = 2 * x * y + im;

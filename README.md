@@ -16,7 +16,7 @@ After that, invoke:
 ```
 
 After a while (initialization takes by far the longest) a `test.ppm` file is created. Most Linux picture viewers can open that.
-Most time is in writing the PPM. On a Raspberry Pi 5 with a Geforce RTX 3060 card, the calculation takes less than 23ms.
+Most time is in writing the PPM. On a Raspberry Pi 5 with a Geforce RTX 3060 card, the calculation takes less than 10ms.
 
 
 Folkert van Heusden

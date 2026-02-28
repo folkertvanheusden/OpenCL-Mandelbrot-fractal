@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	Memory<uint> dimensions(device, 3);
 	dimensions[0] = 3840;  // w
 	dimensions[1] = 2160;  // h
-	dimensions[2] = 256;  // it
+	dimensions[2] = 80;  // it
 	dimensions.write_to_device();
 
 	Memory<float> coordinates(device, 4);
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	fprintf(fh, "P3\n%d\n%d\n%d\n", dimensions[0], dimensions[1], dimensions[2]);
 	for(uint i=0; i<N * 3; i += 3) {
 		fprintf(fh, "%d ", output[i + 0] * dimensions[2] / max_rb);
-		fprintf(fh, "%d ", output[i + 1]);
+		fprintf(fh, "%d ", output[i + 1] * 255 / dimensions[2]);
 		fprintf(fh, "%d%c", output[i + 2] * dimensions[2] / max_rb, (i % 21) == 0 ? '\n' : ' ');
 	}
 	fprintf(fh, "\n");
