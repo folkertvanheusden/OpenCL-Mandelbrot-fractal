@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 	Device device(select_device_with_most_flops());
 
 	Memory<uint> dimensions(device, 3);
-	dimensions[0] = 3840;  // w
-	dimensions[1] = 2160;  // h
+	dimensions[0] = 4096;  // w
+	dimensions[1] = 4096;  // h
 	dimensions[2] = 80;  // it
 	dimensions.write_to_device();
 
