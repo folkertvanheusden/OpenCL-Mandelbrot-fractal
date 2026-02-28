@@ -22,11 +22,11 @@ int main(int argc, char *argv[])
 	dimensions[2] = 80;  // it
 	dimensions.write_to_device();
 
-	Memory<float> coordinates(device, 4);
-	coordinates[0] = -2.f;
-	coordinates[1] = -2.f;
-	coordinates[2] =  2.f;
-	coordinates[3] =  2.f;
+	Memory<double> coordinates(device, 4);
+	coordinates[0] = -2.;
+	coordinates[1] = -2.;
+	coordinates[2] =  2.;
+	coordinates[3] =  2.;
 	coordinates.write_to_device();
 
 	const uint   N   = dimensions[0] * dimensions[1];

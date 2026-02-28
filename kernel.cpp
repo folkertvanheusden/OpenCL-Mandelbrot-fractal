@@ -6,13 +6,13 @@
 string opencl_c_container()
 {
 	return R(
-			kernel void mandelbrot_kernel(global uint *dims, global float *coordinates, global uint *out)
+			kernel void mandelbrot_kernel(global uint *dims, global double *coordinates, global uint *out)
 			{
 				const uint  n      = get_global_id(0);
 				const uint  x_int  = n % dims[0];
 				const uint  y_int  = n / dims[0];
-				const double re     = (coordinates[2] - coordinates[0]) / dims[0] * x_int + coordinates[0];
-				const double im     = (coordinates[3] - coordinates[1]) / dims[1] * y_int + coordinates[1];
+				const double re    = (coordinates[2] - coordinates[0]) / dims[0] * x_int + coordinates[0];
+				const double im    = (coordinates[3] - coordinates[1]) / dims[1] * y_int + coordinates[1];
 
 				uint        cur_it = 0;
 				double      x      = 0;
