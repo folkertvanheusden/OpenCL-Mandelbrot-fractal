@@ -29,9 +29,9 @@ string opencl_c_container()
 
 				if (cur_it < dims[2]) {
 					int offset = n * 3;
-					out[offset + 0] = 128 + x * x;
+					out[offset + 0] = x * x;
 					out[offset + 1] = cur_it;
-					out[offset + 2] = 128 - y * y;
+					out[offset + 2] = y * y;
 				}
 			}
 		);

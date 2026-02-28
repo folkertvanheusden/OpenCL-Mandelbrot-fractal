@@ -42,13 +42,20 @@ int main(int argc, char *argv[])
 
 	output.read_from_device();
 
-	uint max_val = 0;
-	for(uint i=0; i<N * 3; i++)
-		max_val = std::max(max_val, output[i]);
+	uint max_rb = 0;
+	for(uint i=0; i<N * 3; i += 3) {
+		max_rb = std::max(max_rb, output[i + 0]);
+		max_rb = std::max(max_rb, output[i + 2]);
+	}
 
-	fprintf(fh, "P3\n%d\n%d\n%d\n", dimensions[0], dimensions[1], max_val);
-	for(uint i=0; i<N * 3; i++)
-		fprintf(fh, "%d%c", output[i], (i % 7) == 0 ? '\n' : ' ');
+	printf("%d\n", max_rb);
+
+	fprintf(fh, "P3\n%d\n%d\n%d\n", dimensions[0], dimensions[1], dimensions[2]);
+	for(uint i=0; i<N * 3; i += 3) {
+		fprintf(fh, "%d ", output[i + 0] * dimensions[2] / max_rb);
+		fprintf(fh, "%d ", output[i + 1]);
+		fprintf(fh, "%d%c", output[i + 2] * dimensions[2] / max_rb, (i % 21) == 0 ? '\n' : ' ');
+	}
 	fprintf(fh, "\n");
 	fclose(fh);
 
