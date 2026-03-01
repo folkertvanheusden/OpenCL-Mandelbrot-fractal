@@ -2,6 +2,7 @@
 // released under MIT license
 
 #include <chrono>
+#include <cmath>
 #include <cstdio>
 extern "C" {
 #include <gwavi.h>
@@ -23,15 +24,9 @@ int main(int argc, char *argv[])
 	dimensions[2] = 256;  // it
 	dimensions.write_to_device();
 
-	double start_x1 = -2;
-	double start_x2 =  2;
-	double start_y1 = -2;
-	double start_y2 =  2;
-
-	double end_x1   =  -0.812223315621338 - 0.0000000001;
-	double end_x2   =  -0.812223315621338 + 0.0000000001;
-	double end_y1   =  -0.185453926110785 - 0.0000000001;
-	double end_y2   =  -0.185453926110785 + 0.0000000001;
+	double cx = -0.812223315621338;
+	double cy = -0.185453926110785;
+	double extend = 1.5;
 
 	int n_steps = 250;
 
@@ -47,19 +42,18 @@ int main(int argc, char *argv[])
 
 	uint8_t *out_8b = new uint8_t[dimensions[0] * dimensions[1] * 3];
 
-	for(int step=n_steps; step>0; step--) {
-		double step_factor = step / double(n_steps);
-		coordinates[0] = (end_x1 - start_x1) * step_factor + start_x1;
-		coordinates[1] = (end_x2 - start_x2) * step_factor + start_x2;
-		coordinates[2] = (end_y1 - start_y1) * step_factor + start_y1;
-		coordinates[3] = (end_y2 - start_y2) * step_factor + start_y2;
+	for(int step=1; step<=n_steps; step++) {
+		coordinates[0] = cx - extend * pow(0.95, double(step));
+		coordinates[1] = cy - extend * pow(0.95, double(step));
+		coordinates[2] = cx + extend * pow(0.95, double(step));
+		coordinates[3] = cy + extend * pow(0.95, double(step));
 		coordinates.write_to_device();
 
 		auto start_ts = std::chrono::system_clock::now();
 		mandelbrot.run();
 		auto end_ts = std::chrono::system_clock::now();
 
-		printf("%d/%d] Calculation took %lu microseconds\n", step + 1, n_steps, std::chrono::duration_cast<std::chrono::microseconds>(end_ts - start_ts).count());
+		printf("%d/%d] Calculation took %lu microseconds\n", step, n_steps, std::chrono::duration_cast<std::chrono::microseconds>(end_ts - start_ts).count());
 
 		output.read_from_device();
 
