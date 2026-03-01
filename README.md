@@ -15,8 +15,8 @@ After that, invoke:
 ./opencl-mandelbrot
 ```
 
-After a while (initialization takes by far the longest) a `test.ppm` file is created. Most Linux picture viewers can open that.
-Most time is in writing the PPM. On a Raspberry Pi 5 with a Geforce RTX 3060 card, the calculation takes less than 23ms.
+After a while a `test.avi` file is created. vlc displays this.
+Most time is in writing the avi. On a Raspberry Pi 5 with a Geforce RTX 3060 card, the calculation takes around 18 seconds.
 
 
 Folkert van Heusden
