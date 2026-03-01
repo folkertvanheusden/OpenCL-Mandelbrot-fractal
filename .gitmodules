@@ -1,3 +1,6 @@
 [submodule "OpenCL-Wrapper"]
 	path = OpenCL-Wrapper
 	url = https://github.com/ProjectPhysX/OpenCL-Wrapper
+[submodule "libgwavi"]
+	path = libgwavi
+	url = https://github.com/rolinh/libgwavi

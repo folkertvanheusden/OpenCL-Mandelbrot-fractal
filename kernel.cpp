@@ -27,11 +27,14 @@ string opencl_c_container()
 					x = tx;
 				}
 
+				int offset = n * 3;
 				if (cur_it < dims[2]) {
-					int offset = n * 3;
 					out[offset + 0] = x * x;
 					out[offset + 1] = cur_it;
 					out[offset + 2] = y * y;
+				}
+				else {
+					out[offset + 0] = out[offset + 1] = out[offset + 2] = 0;
 				}
 			}
 		);

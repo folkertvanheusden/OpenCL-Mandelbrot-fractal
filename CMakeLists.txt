@@ -13,7 +13,12 @@ add_compile_options(-Wall -pedantic)
 add_executable(opencl-mandelbrot
 	kernel.cpp
 	test.cpp
+	libgwavi/src/avi-utils.c
+	libgwavi/src/fileio.c
+	libgwavi/src/gwavi.c
 )
+
+target_include_directories(opencl-mandelbrot PUBLIC libgwavi/inc/)
 
 include(FindPkgConfig)
 
@@ -21,3 +26,8 @@ pkg_check_modules(LIBOPENCL OpenCL)
 target_link_libraries(opencl-mandelbrot ${LIBOPENCL_LIBRARIES})
 target_include_directories(opencl-mandelbrot PUBLIC ${LIBOPENCL_INCLUDE_DIRS})
 target_compile_options(opencl-mandelbrot PUBLIC ${LIBOPENCL_CFLAGS_OTHER})
+
+pkg_check_modules(LIBTURBOJPEG libturbojpeg)
+target_link_libraries(opencl-mandelbrot ${LIBTURBOJPEG_LIBRARIES})
+target_include_directories(opencl-mandelbrot PUBLIC ${LIBTURBOJPEG_INCLUDE_DIRS})
+target_compile_options(opencl-mandelbrot PUBLIC ${LIBTURBOJPEG_CFLAGS_OTHER})
